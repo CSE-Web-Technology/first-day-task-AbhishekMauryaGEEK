@@ -1,0 +1,107 @@
+@font-face {
+  font-family: 'OnePiece';
+  src: url('OnePiece-zAqL.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'OnePiece', sans-serif;
+     font-size: 30px;
+
+      /* background: linear-gradient(135deg, #205f63ff, #66a6ff); */
+background: url('https://wallpapers.com/images/hd/minimalist-one-piece-q6r6ujaxlghx5has.jpg') no-repeat center center;
+background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    section {
+      background: rgba(217, 123, 243, 0.15);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 40px;
+      width: 350px;
+      color: #000000ff;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 34px;
+      font-weight: 600;
+      text-align: center;
+      color: rgba(255, 255, 255, 1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #f6f6f6ff;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      border: none;
+      background: rgba(88, 71, 89, 0.44);
+      color: #000000ff;
+      font-size: 14px;
+      outline: none;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #ffffffff;
+    }
+
+    input[type="submit"] {
+      background-color: #ffffffcc;
+      color: #000000ff;
+      font-weight: bold;
+      cursor: pointer;
+      font-size:20px
+      font-family: 'OnePiece', sans-serif;
+      transition: background 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      font-family: 'OnePiece', sans-serif;
+      background-color: #f387e1ee;
+      font-size:20px;
+    }
+    input,
+textarea {
+  font-family: sans-serif; /* default font */
+}
+
+/* Style placeholder normally */
+input::placeholder,
+textarea::placeholder {
+  font-family: sans-serif;
+  color: #bca6a6ff;
+}
+
+/* When input is focused, change font — affects placeholder too */
+input:focus,
+textarea:focus {
+  font-family: 'OnePiece', sans-serif;
+  font-size:25px
+}
+
+/* Optional: make placeholder more dramatic on focus */
+input:focus::placeholder,
+textarea:focus::placeholder {
+  color: #12ece1ff;
+  font-style: italic;
+  font-family: 'OnePiece', sans-serif;
+  font-size:20px;
+  opacity: 1;
+}

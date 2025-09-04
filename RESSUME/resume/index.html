@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhishek Maurya - Personal Portfolo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+  body {
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(ellipse at center, #ff640b 0%, #6811b0 100%);
+  color: #b89797;
+  overflow-x: hidden;
+  cursor: none;
+  transition: background 1s ease;
+}
+.bg-home {
+  background: radial-gradient(ellipse at center, #ed704a 0%, #5b06bd 100%);
+}
+
+.bg-about {
+  background: radial-gradient(ellipse at center, #771717 0%, #530682 100%);
+}
+
+.bg-skills {
+  background: radial-gradient(ellipse at center, #e86500 0%, #5f0e9c 100%);
+}
+
+.bg-achievements {
+  background: radial-gradient(ellipse at center, #f15757 0%, #3f0892 100%);
+}
+
+.bg-contact {
+  background: radial-gradient(ellipse at center, #ae9595 0%, #000000 100%);
+}
+        .glass-effect {
+            position: relative;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 20px;
+            color: white;
+        }
+
+        .glass-effect:hover {
+            border: none;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25), 
+              0 0 12px rgba(0, 255, 255, 0.3);
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+
+
+        }
+
+        .cursor {
+            position: fixed;
+            left: 0;
+            top: 0;
+            pointer-events: none;
+            z-index: 9999;
+            border-radius: 50%;
+            transition: transform 0.2s ease-out, opacity 0.3s ease, background-color 0.3s ease;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #fff;
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        section {
+            padding: 100px 1rem;
+        }
+
+        @media (min-width: 768px) {
+            section {
+                padding: 120px 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Custom Cursor -->
+    <div class="cursor cursor-dot"></div>
+    <div class="cursor cursor-outline"></div>
+
+    <!-- Reactive Particle Background -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Header & Navigation -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between glass-effect rounded-full p-2">
+                <a href="#home" class=" font-bold font-size-[20px] text-white ml-4 hover-target rounded-xl">AM</a>
+                <div class="hidden md:flex space-x-2">
+                    <a href="#home"
+                        class="nav-link hover-target text-white px-4 py-2 rounded-full transition-colors duration-300 hover:drop-shadow-[0_0_6px_white]">Home</a>
+                    <a href="#about"
+                        class="nav-link hover-target text-white px-4 py-2 rounded-full transition-colors duration-300  hover:drop-shadow-[0_0_6px_white] ">About
+                        Me</a>
+                    <a href="#skills"
+                        class="nav-link hover-target text-white px-4 py-2 rounded-full transition-colors duration-300  hover:drop-shadow-[0_0_6px_white]">Skills</a>
+                    <a href="#achievements"
+                        class="nav-link hover-target text-white px-4 py-2 rounded-full transition-colors duration-300  hover:drop-shadow-[0_0_6px_white]">Achievements</a>
+                    <a href="#contact"
+                        class="nav-link hover-target text-white px-4 py-2 rounded-full transition-colors duration-300  hover:drop-shadow-[0_0_6px_white]">Contact</a>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden p-2 mr-2 text-white hover-target">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-2 glass-effect rounded-xl p-4">
+                <a href="#home" class="block text-white py-2 hover-target  hover:drop-shadow-[0_0_6px_white]">Home</a>
+                <a href="#about" class="block text-white py-2 hover-target  hover:drop-shadow-[0_0_6px_white]">About Me</a>
+                <a href="#skills" class="block text-white py-2 hover-target  hover:drop-shadow-[0_0_6px_white]">Skills</a>
+                <a href="#achievements" class="block text-white py-2 hover-target  hover:drop-shadow-[0_0_6px_white]">Achievements</a>
+                <a href="#contact" class="block text-white py-2 hover-target  hover:drop-shadow-[0_0_6px_white]">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="min-h-screen flex items-center justify-center text-center">
+            <div class="animate-reveal">
+                <h1 class="text-5xl md:text-7xl font-bold text-white mb-4  hover:drop-shadow-[0_0_6px_white]">Abhishek Maurya</h1>
+                <p class="text-xl md:text-2xl text-gray-300  hover:drop-shadow-[0_0_6px_black]">Creative Frontend Developer & UI/UX Enthusiast</p>
+            </div>
+        </section>
+
+        <!-- About Me Section -->
+        <section id="about" class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold animate-reveal  hover:drop-shadow-[0_0_6px_black]">About Me</h2>
+            </div>
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-1/3 animate-reveal">
+                    <img src="WhatsApp Image 2025-08-30 at 14.48.54_bd2493b2.jpg" alt="ABHISHEK"
+                        class="rounded-full mx-auto glass-effect p-2 grayscale-[1]"
+                        onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/ffffff?text=Error';">
+                </div>
+                <div class="w-full md:w-2/3 animate-reveal">
+                    <div class="glass-effect p-8 rounded-2xl">
+                        <p class="text-lg mb-6 text-gray-300">
+                            I'm a passionate developer with a keen eye for design and a love for creating intuitive,
+                            dynamic user experiences. I thrive on turning complex problems into beautiful, functional
+                            digital solutions.
+                        </p>
+                        <ul class="space-y-3 text-gray-200">
+                            <li><strong>Name:</strong> ABHISHEK MAURYA</li>
+                            <li><strong>Date of Birth:</strong> 20 july 2005</li>
+                            <li><strong>Current Role:</strong>2nd year student at ABES Engineering college</li>
+                            <li><strong>Personality Type:</strong> INTJ-A - The Architect</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+<section id="skills" class="container mx-auto">
+  <div class="text-center mb-12">
+    <h2 class="text-4xl font-bold animate-reveal  hover:drop-shadow-[0_0_6px_black]">My Skills</h2>
+  </div>
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-8 text-[12px] sm:text-[14px]">
+    <!-- Skill Cards -->
+    <div class="skill-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+      <h3 class="text-xl font-semibold flex justify-center items-center"><img src="image-removebg-preview.png" alt="C/C++" class="w-[180px] h-[180px] object-contain mx-auto"></h3>
+    </div>
+    <div class="skill-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+      <h3 class="text-xl font-semibold flex justify-center items-center"><img src="wp7250032-removebg-preview.png" alt="JAVA" ></h3>
+    </div>
+    <div class="skill-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+      <h3 class="text-xl font-semibold flex justify-center items-center"><img src="OIP__6_-removebg-preview.png" alt="Python"></h3>
+    </div>
+    <div class="skill-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+      <h3 class="text-xl font-semibold flex justify-center items-center"><img src="html_css_and_javascript-removebg-preview.png" alt="HTML/CSS/JS"></h3>
+    </div>
+    <div class="skill-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+      <h3 class="text-xl font-semibold"><img src="re269re79-react-logo-react-logo--removebg-preview.png"  alt="React"></h3>
+    </div>
+    <div class="skill-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+      <h3 class="text-xl font-semibold"><img src="OIP__7_-removebg-preview.png" alt="Tailwind"></h3>
+    </div>
+    <div class="skill-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+      <h3 class="text-xl font-semibold"><img src="Typescript_logo_2020.svg-removebg-preview.png" alt="Typescript"></h3>
+    </div>
+    <div class="skill-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+      <h3 class="text-xl font-semibold"><img src="1_6INVhQxLdce1DRriJTHQfg-removebg-preview.png" alt="Scss"></h3>
+    </div>
+    <div class="skill-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+      <h3 class="text-xl font-semibold"><img src="e1906d9b-540d-4ebd-b432-a8cf00472848-cover-removebg-preview.png" alt="Figma"></h3>
+    </div>
+    <div class="skill-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+      <h3 class="text-xl font-semibold"><img src="nodejs-frameworks-removebg-preview.png" alt="Node.js"></h3>
+    </div>
+    <div class="skill-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+      <h3 class="text-xl font-semibold"><img src="unity-engine-removebg-preview.png" alt="Unity"></h3>
+    </div>
+    <div class="skill-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+      <h3 class="text-xl font-semibold"><img src="Blender-Symbol.png" alt="Blender"></h3>
+    </div>
+    <div class="col-span-2 sm:col-span-3 flex justify-center">
+      <div class="w-[180px] h-[180px] flex justify-center items-center skill-card glass-effect m-4 p-6 rounded-2xl text-center hover-target animate-reveal">
+        <h3 class="text-xl font-semibold"><img src="OIP__8_-removebg-preview.png" alt="After Effets"></h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+        <section id="achievements" class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold animate-reveal  hover:drop-shadow-[0_0_6px_black]">Projects & Achivement</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-2 gap-6 md:gap-8">
+
+              <a href="https://67fbc3d19cca222340f71313--cheery-beijinho-3c7eed.netlify.app/">  <div class="achievement-card glass-effect p-8 rounded-2xl hover-target animate-reveal">
+                    <h3 class="text-xl font-semibold mb-2">Netflix Landing page <img src="Screenshot 2025-08-30 103817.png" alt="" class="max-w-[400px] w-full h-[355px] mx-auto rounded"></h3>
+                    <p class="text-gray-300"></p>
+                </div></a>
+                <a href="https://docs.google.com/uc?export=download&id=1RF2eOqNDCdWOQa4NLtWsA0-3hFpjR29E"><div class="achievement-card glass-effect p-8 rounded-2xl hover-target animate-reveal">
+                    <h3 class="text-xl font-semibold mb-2">Devloped an AR app in a Hackathon</h3>
+                    <p class="text-gray-300">Created a AR app on Planet simulation in Real-Time with accurate roations and educational content.<b> [Click to Download Application]</b>
+                 <div class="grid grid-cols-3 gap-2 p-2">
+  <img src="WhatsApp Image 2025-05-04 at 12.16.36_338bb1ba.jpg" alt="" class="max-w-[120px] w-full h-auto mx-auto rounded" />
+  <img src="WhatsApp Image 2025-05-04 at 12.16.37_daebcd81.jpg" alt="" class="max-w-[120px] w-full h-auto mx-auto rounded" />
+  <img src="WhatsApp Image 2025-05-04 at 12.30.08_f06877a9.jpg" alt="" class="max-w-[120px] w-full h-auto mx-auto rounded" />
+</div></p>
+                </div></a>
+                <a href="https://wine3dshop.netlify.app/"> <div class="achievement-card glass-effect p-8 rounded-2xl hover-target animate-reveal">
+                    <h3 class="text-xl font-semibold mb-2">Create a 3d interactive website using blender & js framework</h3>
+                    <p class="text-gray-300">create a 3d model,simulated it and use it in website for 3d interactivity </p>
+                </div></a>
+            <a href="https://www.linkedin.com/posts/aditya-bisht-80b77a324_research-ai-resnetv2-activity-7364166617280225280-kUUe?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFK6wLIBBnMhnRVBwMIyp1QSml9n54Xn-TQ"><div class="achievement-card glass-effect p-8 rounded-2xl hover-target animate-reveal">
+                    <h3 class="text-xl font-semibold mb-2">Worked & Contributed in publishing Research paper on Pea Plant </h3>
+                    <p class="text-gray-300">Contributed a fellow friend in devloping a 94.5% accurate Ai model for detecting  pea plant disease using ResNetV2</p>
+                </div></a>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold animate-reveal  hover:drop-shadow-[0_0_6px_black]">Get In Touch</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+                <!-- Contact Item 1 -->
+             <!-- Contact Item 1 -->
+  <a href="https://abhishek-maurya-port.netlify.app/" class="contact-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+                    <h3 class="text-xl font-semibold">Email</h3>
+                </a>
+                <!-- Contact Item 2 -->
+                <a href="https://www.linkedin.com/in/abhishek-maurya-9829b3328?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="contact-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+                    <h3 class="text-xl font-semibold">Linkdin</h3>
+                </a>
+                <!-- Contact Item 3 -->
+                <a href="https://github.com/AbhishekMauryaGEEK" class="contact-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+                    <h3 class="text-xl font-semibold">GitHub</h3>
+                </a>
+                <!-- Contact Item 4 -->
+                <a href="https://drive.google.com/file/d/1N7dgTrlLU2O8KarG6taPftO7a8yYkPdR/view?usp=sharing" class="contact-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+                    <h3 class="text-xl font-semibold">Resume</h3>
+                </a>
+                <a href="https://x.com/AbhiShek828389" class="contact-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+                    <h3 class="text-xl font-semibold">Twitter</h3>
+                </a>
+                <!-- Contact Item 5 -->
+                <a href="https://www.instagram.com/ab_hi4349?igsh=bGY3OXM5cGI3MGlk&utm_source=ig_contact_invite" class="contact-card glass-effect p-8 rounded-2xl text-center hover-target animate-reveal">
+                    <h3 class="text-xl font-semibold">Instagram</h3>
+                </a>
+                <!-- Contact Item 6 -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-20">
+        <div class="animate-reveal">
+            <p class="text-[50px] text-gray-400  hover:drop-shadow-[0_0_6px_brown]">You dug to the end!</p>
+            <img src="457-4575204_clash-of-clans-mass-miner-clipart-png-download-removebg-preview.png" alt="Miner Icon" class="mx-auto mb-4"
+                onerror="this.onerror=null;this.src='https://placehold.co/100x100/0a0a0a/ffffff?text=Error';">
+        </div>
+    </footer>
+
+    <!-- Scroll-to-Top Button -->
+    <button id="scrollToTopBtn"
+        class="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full glass-effect flex items-center justify-center opacity-0 invisible transition-all duration-500 hover-target">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+        </svg>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // --- 1. CUSTOM CURSOR ---
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+            const hoverTargets = document.querySelectorAll('.hover-target');
+
+            // GSAP's quickTo is faster for frequent updates like mouse movement
+            const dotX = gsap.quickTo(cursorDot, "left", { duration: 0.4, ease: "power3" });
+            const dotY = gsap.quickTo(cursorDot, "top", { duration: 0.4, ease: "power3" });
+            const outlineX = gsap.quickTo(cursorOutline, "left", { duration: 0.8, ease: "power3" });
+            const outlineY = gsap.quickTo(cursorOutline, "top", { duration: 0.8, ease: "power3" });
+
+            window.addEventListener('mousemove', e => {
+                // Center the cursor elements on the actual cursor position
+                dotX(e.clientX - cursorDot.offsetWidth / 2);
+                dotY(e.clientY - cursorDot.offsetHeight / 2);
+                outlineX(e.clientX - cursorOutline.offsetWidth / 2);
+                outlineY(e.clientY - cursorOutline.offsetHeight / 2);
+            });
+
+            hoverTargets.forEach(target => {
+                target.addEventListener('mouseenter', () => {
+                    gsap.to(cursorOutline, {
+                        scale: 2.5,
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        borderColor: 'rgba(255, 255, 255, 0.0)'
+                    });
+                });
+                target.addEventListener('mouseleave', () => {
+                    gsap.to(cursorOutline, {
+                        scale: 1,
+                        backgroundColor: 'transparent',
+                        borderColor: 'rgba(255, 255, 255, 0.5)'
+                    });
+                });
+            });
+
+            // Special cursor animation for 'About Me' section
+            const aboutSection = document.querySelector('#about');
+            aboutSection.addEventListener('mouseenter', () => {
+                gsap.to(cursorOutline, {
+                    duration: 0.5,
+                    width: '60px',
+                    height: '60px',
+                    borderColor: '#fff',
+                    ease: 'power4.inOut'
+                });
+            });
+            aboutSection.addEventListener('mouseleave', () => {
+                gsap.to(cursorOutline, {
+                    duration: 0.5,
+                    width: '40px',
+                    height: '40px',
+                    borderColor: 'rgba(255, 255, 255, 0.5)',
+                    ease: 'power4.inOut'
+                });
+            });
+
+
+            // --- 2. REACTIVE PARTICLE BACKGROUND ---
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const mouse = { x: null, y: null };
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            window.addEventListener('mousemove', e => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+            window.addEventListener('mouseout', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 1;
+                    this.speedX = Math.random() * 2 - 1;
+                    this.speedY = Math.random() * 2 - 1;
+                    this.color = 'rgba(255, 255, 255, 0.5)';
+                }
+                update() {
+                    if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                    if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+
+                    // Mouse interaction
+                    if (mouse.x != null) {
+                        let dx = mouse.x - this.x;
+                        let dy = mouse.y - this.y;
+                        let distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance < 100) { // Interaction radius
+                            this.x -= dx / 15;
+                            this.y -= dy / 15;
+                        }
+                    }
+                }
+                draw() {
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            function initParticles() {
+                particles = [];
+                let numberOfParticles = (canvas.height * canvas.width) / 9000;
+                for (let i = 0; i < numberOfParticles; i++) {
+                    particles.push(new Particle());
+                }
+            }
+            initParticles();
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                }
+                requestAnimationFrame(animateParticles);
+            }
+            animateParticles();
+
+            // --- 3. SCROLL & REVEAL ANIMATIONS ---
+            const revealElements = document.querySelectorAll('.animate-reveal');
+            revealElements.forEach(el => {
+                gsap.from(el, {
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 90%',
+                        toggleActions: 'play none none none'
+                    },
+                    opacity: 0,
+                    y: 50,
+                    duration: 1,
+                    ease: 'power3.out'
+                });
+            });
+
+            // --- 4. NAVIGATION & HEADER ---
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Header shrink on scroll
+            const header = document.getElementById('header');
+            ScrollTrigger.create({
+                start: 'top -80',
+                end: 99999,
+                toggleClass: { className: 'header-scrolled', targets: 'body' } // You can style .header-scrolled in CSS
+            });
+            // We can add a style for .header-scrolled if needed, e.g., to change its background
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .header-scrolled #header {
+                    padding-top: 0.5rem;
+                    padding-bottom: 0.5rem;
+                }
+            `;
+            document.head.appendChild(style);
+
+            // Active nav link highlighting
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            sections.forEach(section => {
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: 'top center',
+                    end: 'bottom center',
+                    onToggle: self => {
+                        if (self.isActive) {
+                            const id = section.getAttribute('id');
+                            navLinks.forEach(link => {
+                                link.classList.remove('bg-white/20');
+                                if (link.getAttribute('href') === `#${id}`) {
+                                    link.classList.add('bg-white/20');
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+
+
+            // --- 5. SCROLL-TO-TOP BUTTON ---
+            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+            gsap.to(scrollToTopBtn, {
+                scrollTrigger: {
+                    trigger: '#about', // Show button after scrolling past the first section
+                    start: 'top bottom',
+                    toggleActions: 'play none none reverse'
+                },
+                opacity: 1,
+                visibility: 'visible',
+                duration: 0.5
+            });
+
+            scrollToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+         const sections = document.querySelectorAll("section");
+  const body = document.body;
+
+  window.addEventListener("scroll", () => {
+    let current = "";
+
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (pageYOffset >= sectionTop - window.innerHeight / 2) {
+        current = section.getAttribute("id");
+      }
+    });
+
+    body.className = ""; // Reset
+    body.classList.add(`bg-${current}`);
+  });
+
+    </script>
+
+</body>
+
+</html>
