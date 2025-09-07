@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>forms for html</title>
+</head>
+<body>
+    <h1>form for enrolement </h1>
+    <form action="post">
+        <label for="username">1.Enter your username :</label>
+        <input type="text" id="username"name="username"placeholder="Enter your username">
+    <div><br>   
+        <label for="userbirth">2.Enter your age:</label>
+        <input type="number"name="userage"placeholder="Enter your age">
+    </div>
+    <div> <br>
+        <label for=userdob">3.Enter your date of birth:</label>
+        <input type="date"name="userdob"placeholder="Enter your birthdate">
+    </div>  
+    <div><br>
+        <label for="userpass">4.Enter your password:</label>
+        <input type="password"name="userpass"placeholder="8 minimum character">
+    </div> <br>
+    <div>
+        <label for="resume">5.Attach your Ressume</label>
+        <input type="file"name="userpass">
+    </div>   
+    <div><br>    
+        <label for="gender">6.Gender:</label>
+        <input type="radio"name="usersex"id="Male"value="male">
+        <label for="Male">Male</label>
+        <input type="radio"name="usersex"id="Female"value="female">
+        <label for="Female">Female</label>
+    </div>
+    <div><br>
+        <input type="checkbox"name="subscribe"id="subscribe"value="yes">
+        <label for="check">:NEWSLETTER</label>
+    </div> 
+    <div>
+        <div>
+            <label for="comment">Any suggestions</label>
+        </div>
+        <textarea name="comment" rows="5"cols="50">
+        </textarea>
+    </div>
+    <select name="type of sub">
+        <option value="daily">daily</option>
+        <option value="monthly">monthly</option>
+        <option value="yearly">yearly</option>
+    </select>
+    </form>
+</body>
+</html>
